@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naventiq by Aerones: the customer portal for wind-turbine blade findings</title>
+<meta name="description" content="Naventiq is the Aerones customer portal for wind-turbine owners and operators. Review anomalies, compare inspections, plan field work and see findings on a 3D blade.">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<style>
+body{margin:0;background:#ffffff;font-family:Geist,"Helvetica Neue",Helvetica,sans-serif}
+a{color:#13263A}a:hover{color:#FC6722}
+@keyframes nqfill{from{width:0}to{width:100%}}
+.nq-progress{animation:nqfill 6s linear forwards}
+@media (prefers-reduced-motion: reduce){.nq-progress{animation:none;width:100%}}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #FC6722;outline-offset:2px}
+</style>
+<style>
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+.nq-step{position:relative;display:block;width:100%;text-align:left;font:inherit;cursor:pointer;padding:18px 20px 20px;border-radius:10px;min-height:44px;background:transparent;border:1px solid transparent;transition:background .2s,border-color .2s,box-shadow .2s}
+.nq-step[aria-pressed="true"]{background:#fff;border-color:#DDE3EA;box-shadow:0 12px 30px -18px rgba(12,26,41,.35)}
+.nq-track{display:none;position:absolute;left:0;right:0;bottom:0;height:3px;background:#E2E7ED;border-radius:0 0 10px 10px;overflow:hidden}
+.nq-step[aria-pressed="true"] .nq-track{display:block}
+.nq-progress{display:block;height:100%;width:0;background:#FC6722}
+.nq-step[aria-pressed="true"] .nq-progress{animation:nqfill 6s linear forwards}
+.nq-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top center;transition:opacity .6s ease}
+@media (prefers-reduced-motion: reduce){.nq-step[aria-pressed="true"] .nq-progress{animation:none;width:100%}}
+</style>
+</head>
+<body>
+<div style="width: 100%; min-width: 360px; font-family: Geist, 'Helvetica Neue', Helvetica, sans-serif; color: #13263A; background: #ffffff; -webkit-font-smoothing: antialiased">
+
+<!-- Top bar -->
+<header style="background: #13263A; padding: 0 32px">
+<nav aria-label="Main" style="max-width: 1200px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#top" aria-label="Aerones Naventiq, back to top" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: #ffffff">
+<svg role="img" aria-label="Aerones" viewBox="0 0 180 24.87" style="height: 18px; width: auto; display: block" fill="#ffffff"><path d="M100.62,3.82c-.97-.99-2.12-1.84-3.44-2.48-.13-.06-.25-.12-.38-.17l-5.3,10.86,5.55-4c4.56,4.41,3.58,13.28-6.96,16.74,0,0,0,0,0,0,5.15.69,10.38-1.93,12.79-6.85,2.36-4.84,1.28-10.45-2.27-14.09Z"></path><path d="M82.13,21.06c.97.99,2.12,1.84,3.44,2.48.13.06.25.12.38.17l5.3-10.86-5.55,4c-4.56-4.41-3.58-13.28,6.96-16.74,0,0,0,0,0,0-5.15-.69-10.38,1.93-12.79,6.85-2.36,4.84-1.28,10.45,2.27,14.09Z"></path><path d="M0,23.67L10.42,1.21h4.99l10.42,22.46h-6.57l-1.44-3.44H7.77l-1.41,3.44H0ZM9.7,15.55h6.19l-2.99-7.19h-.21l-2.99,7.19Z"></path><path d="M45.59,14.66h-10.65v3.96h13.93v5.06h-19.95V1.21h19.19v5.06h-13.17v3.54h10.65v4.85Z"></path><path d="M53.09,23.67V1.21h12.52c3.4,0,5.54,1,6.98,2.51,1.2,1.27,1.93,2.92,1.93,4.78,0,2.75-1.58,4.92-4.13,6.23l5.16,8.94h-6.81l-4.3-7.91h-5.33v7.91h-6.02ZM59.11,6.09v4.78h6.84c1.41,0,2.55-.86,2.55-2.41,0-.62-.24-1.24-.65-1.69-.55-.58-1.27-.69-1.89-.69h-6.84Z"></path><path d="M129.31,1.21v22.46h-5.09l-9.91-12.21h-.04v12.21h-6.05V1.21h5.06l9.94,12.24h.03V1.21h6.05Z"></path><path d="M151.7,14.66h-10.65v3.96h13.93v5.06h-19.95V1.21h19.19v5.06h-13.17v3.54h10.65v4.85Z"></path><path d="M175.36,7.47c-1.48-.86-4.3-2.2-7.6-2.2-1.82,0-3.4.83-3.4,2.27,0,1.58,2.58,1.72,5.02,1.96,4.13.27,10.63.83,10.63,6.95,0,5.68-4.68,7.91-10.32,7.91s-9.73-2.17-12.45-4.16l3.23-4.09c1.55,1.1,5.13,3.54,9.12,3.54,2.79,0,4.4-1.2,4.4-2.68,0-1.62-1.93-1.93-4.82-2.17-5.02-.41-10.83-.93-10.83-6.95,0-5.57,5.19-7.33,9.56-7.33,4.61,0,8.7,1.55,10.73,2.75l-3.27,4.2Z"></path></svg><span aria-hidden="true" style="width: 1px; height: 18px; background: #4A5E74; align-self: center"></span>
+<span style="font-size: 15px; font-weight: 500; color: #9FB0C2">Naventiq</span>
+</a>
+<div style="display: flex; align-items: center; gap: 28px; flex-wrap: wrap">
+<a href="#tour" style="font-size: 15px; color: #D5DEE8; text-decoration: none">Product tour</a>
+<a href="#features" style="font-size: 15px; color: #D5DEE8; text-decoration: none">Features</a>
+<a href="#map" style="font-size: 15px; color: #D5DEE8; text-decoration: none">Inside the portal</a>
+<a href="https://portal.aerones.com/system/login" style="font-size: 15px; font-weight: 600; text-decoration: none; color: #ffffff; border: 1px solid #4A5E74; padding: 11px 18px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>Log in</a>
+<a href="#demo" style="font-size: 15px; font-weight: 600; text-decoration: none; color: #13263A; background: #FC6722; padding: 12px 20px; border-radius: 8px; min-height: 20px">Book a demo</a>
+</div>
+</nav>
+</header>
+
+<!-- Hero with video -->
+<section id="top" style="background: #13263A; color: #ffffff; padding: 72px 32px 72px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 32px 64px; align-items: end">
+<h1 style="margin: 0; font-size: clamp(40px, 5.4vw, 72px); line-height: 1.02; font-weight: 700; letter-spacing: -2px; text-wrap: balance">Every blade finding, from inspection to repair, in one portal.</h1>
+<div style="display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; font-size: 19px; line-height: 1.6; color: #C8D3DF; max-width: 52ch; text-wrap: pretty">Naventiq is the Aerones customer portal for wind-turbine owners and operators. Review anomalies, compare inspections over time, plan field work with your vendors and see where damage clusters across your whole fleet.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<a href="#demo" style="font-size: 16px; font-weight: 600; text-decoration: none; color: #13263A; background: #FC6722; padding: 15px 26px; border-radius: 8px">Book a demo</a>
+<a href="#tour" style="font-size: 16px; font-weight: 600; text-decoration: none; color: #ffffff; border: 1px solid #4A5E74; padding: 14px 24px; border-radius: 8px">Watch the tour</a>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+
+<!-- Video, overlapping hero and features -->
+<section id="tour" aria-label="Product tour" style="padding: 0 32px; background: linear-gradient(to bottom, #13263A 0%, #13263A 50%, #ffffff 50%, #ffffff 100%)">
+<figure style="margin: 0 auto; max-width: 1200px">
+<div style="background: #0C1A29; border: 1px solid #2B4058; border-radius: 20px; padding: 10px; box-shadow: 0 50px 100px -30px rgba(12, 26, 41, 0.55), 0 24px 48px -24px rgba(12, 26, 41, 0.35)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px 12px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #2B4058"></span>
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #2B4058"></span>
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #2B4058"></span>
+<span style="margin-left: 12px; font-size: 13px; color: #8193A7">Naventiq product tour, 2 min</span>
+</div>
+<video src="assets/naventiq-demo.mp4" poster="assets/naventiq-poster.jpg" controls="" muted="" autoplay="" loop="" playsinline="" preload="metadata" aria-label="Naventiq product tour video" style="display: block; width: 100%; aspect-ratio: 1920 / 1032; background: #000000; border-radius: 12px"></video>
+</div>
+</figure>
+</section>
+
+<!-- Features -->
+<section id="features" style="padding: 104px 32px 32px; background: #ffffff">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 760px">
+<h2 style="margin: 0; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.1; font-weight: 700; letter-spacing: -1px; text-wrap: balance">Built for the people who keep turbines turning</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3B4A5C; text-wrap: pretty">Operations teams see what finished in the field and what is in progress. Engineers see the assets and anomalies that need attention. Everyone works from the same data.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); gap: 0; border-top: 2px solid #13263A">
+
+<article style="padding: 36px 40px 44px 0; border-bottom: 1px solid #DDE3EA; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 16px"><span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #FFEDE3; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#13263A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><h3 style="margin: 0; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.4px">A home page that opens where you left it</h3></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">Home has two focuses. <strong style="color: #13263A">Operations</strong> shows what finished in the field yesterday and what is being worked on today. <strong style="color: #13263A">Engineering</strong> puts the assets and anomalies that need attention in front of you.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">It remembers your last focus on any device. Severity 5 anomalies are one click away, and a completed service can go to a colleague for review without leaving the page.</p>
+<div aria-hidden="true" style="border-radius: 12px; background: #F3F5F8; border: 1px solid #E2E7ED; padding: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: inline-flex; align-self: flex-start; padding: 4px; background: #ffffff; border: 1px solid #DDE3EA; border-radius: 10px; gap: 4px"><span style="font-size: 14px; font-weight: 600; color: #ffffff; background: #13263A; padding: 8px 14px; border-radius: 7px">Operations</span><span style="font-size: 14px; font-weight: 500; color: #3B4A5C; padding: 8px 14px">Engineering</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; font-weight: 600; color: #3B4A5C">Finished yesterday</span><div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #ffffff; border-radius: 8px; border: 1px solid #E2E7ED"><span style="width: 8px; height: 8px; border-radius: 50%; background: #2F7D5B; flex-shrink: 0"></span><span style="display: flex; flex-direction: column; gap: 6px; flex-grow: 1"><span style="display: block; height: 8px; width: 70%; border-radius: 4px; background: #9FB0C2"></span><span style="display: block; height: 8px; width: 45%; border-radius: 4px; background: #DDE3EA"></span></span></div><div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #ffffff; border-radius: 8px; border: 1px solid #E2E7ED"><span style="width: 8px; height: 8px; border-radius: 50%; background: #2F7D5B; flex-shrink: 0"></span><span style="display: flex; flex-direction: column; gap: 6px; flex-grow: 1"><span style="display: block; height: 8px; width: 55%; border-radius: 4px; background: #9FB0C2"></span><span style="display: block; height: 8px; width: 35%; border-radius: 4px; background: #DDE3EA"></span></span></div></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; font-weight: 600; color: #3B4A5C">In progress today</span><div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #ffffff; border-radius: 8px; border: 1px solid #E2E7ED"><span style="width: 8px; height: 8px; border-radius: 50%; background: #FC6722; flex-shrink: 0"></span><span style="display: flex; flex-direction: column; gap: 6px; flex-grow: 1"><span style="display: block; height: 8px; width: 65%; border-radius: 4px; background: #9FB0C2"></span><span style="display: block; height: 8px; width: 40%; border-radius: 4px; background: #DDE3EA"></span></span></div><div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #ffffff; border-radius: 8px; border: 1px solid #E2E7ED"><span style="width: 8px; height: 8px; border-radius: 50%; background: #FC6722; flex-shrink: 0"></span><span style="display: flex; flex-direction: column; gap: 6px; flex-grow: 1"><span style="display: block; height: 8px; width: 50%; border-radius: 4px; background: #9FB0C2"></span><span style="display: block; height: 8px; width: 30%; border-radius: 4px; background: #DDE3EA"></span></span></div></div>
+</div>
+</div>
+</article>
+
+<article style="padding: 36px 0 44px 40px; border-bottom: 1px solid #DDE3EA; border-left: 1px solid #DDE3EA; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 16px"><span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #FFEDE3; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#13263A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/><path d="M11 7.5v4"/><path d="M11 14.5h.01"/></svg></span><h3 style="margin: 0; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.4px">Anomalies, at the speed you read them</h3></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">Arrow keys move through the list. A side drawer opens the full picture of a finding beside it, and single keys act on it without leaving the row.</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; padding: 6px 0">
+<div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #3B4A5C"><kbd style="font-family: Geist, sans-serif; font-size: 15px; font-weight: 600; color: #13263A; background: #F3F5F8; border: 1px solid #C9D2DC; border-bottom-width: 3px; border-radius: 6px; min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center">R</kbd>Mark reviewed</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #3B4A5C"><kbd style="font-family: Geist, sans-serif; font-size: 15px; font-weight: 600; color: #13263A; background: #F3F5F8; border: 1px solid #C9D2DC; border-bottom-width: 3px; border-radius: 6px; min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center">C</kbd>Mark confirmed</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #3B4A5C"><kbd style="font-family: Geist, sans-serif; font-size: 15px; font-weight: 600; color: #13263A; background: #F3F5F8; border: 1px solid #C9D2DC; border-bottom-width: 3px; border-radius: 6px; min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center">T</kbd>Create a task</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: #3B4A5C"><kbd style="font-family: Geist, sans-serif; font-size: 15px; font-weight: 600; color: #13263A; background: #F3F5F8; border: 1px solid #C9D2DC; border-bottom-width: 3px; border-radius: 6px; min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center">W</kbd>Plan a service</div>
+</div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">The same finding from earlier inspections is one click away, and Compare puts raw service material side by side, internal and external, so you can see how a defect actually developed.</p>
+</article>
+
+<article style="padding: 36px 40px 44px 0; border-bottom: 1px solid #DDE3EA; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 16px"><span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #FFEDE3; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#13263A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 13 2 2 4-4"/></svg></span><h3 style="margin: 0; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.4px">Turn findings into work, and follow it out</h3></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch"><strong style="color: #13263A">Office tasks</strong> are the to-dos inside the portal. Ask a colleague to go through a set of service results, assign it, and see where it stands.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch"><strong style="color: #13263A">Field work</strong> is the job on the turbine. Create a planning service straight from anomalies, or from turbines and blades, assign a vendor, hand items to their technicians and follow each one through to execution.</p>
+<div aria-hidden="true" style="border-radius: 12px; background: #F3F5F8; border: 1px solid #E2E7ED; padding: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px"><span style="font-size: 14px; font-weight: 600; color: #13263A; background: #ffffff; border: 1px solid #C9D2DC; padding: 9px 12px; border-radius: 8px; white-space: nowrap">Anomalies</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8193A7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span style="font-size: 14px; font-weight: 600; color: #ffffff; background: #13263A; border: 1px solid #13263A; padding: 9px 12px; border-radius: 8px; white-space: nowrap">Planning service</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8193A7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span style="font-size: 14px; font-weight: 600; color: #13263A; background: #ffffff; border: 1px solid #C9D2DC; padding: 9px 12px; border-radius: 8px; white-space: nowrap">Vendor</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8193A7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span style="font-size: 14px; font-weight: 600; color: #13263A; background: #ffffff; border: 1px solid #C9D2DC; padding: 9px 12px; border-radius: 8px; white-space: nowrap">Technicians</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8193A7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg><span style="font-size: 14px; font-weight: 600; color: #13263A; background: #ffffff; border: 1px solid #C9D2DC; padding: 9px 12px; border-radius: 8px; white-space: nowrap">Executed</span></div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #3B4A5C"><span style="display: flex; gap: 4px"><span style="width: 28px; height: 6px; border-radius: 3px; background: #13263A"></span><span style="width: 28px; height: 6px; border-radius: 3px; background: #13263A"></span><span style="width: 28px; height: 6px; border-radius: 3px; background: #FC6722"></span><span style="width: 28px; height: 6px; border-radius: 3px; background: #C9D2DC"></span><span style="width: 28px; height: 6px; border-radius: 3px; background: #C9D2DC"></span></span>Each item tracked through to execution</div>
+</div>
+</article>
+
+<article style="padding: 36px 0 44px 40px; border-bottom: 1px solid #DDE3EA; border-left: 1px solid #DDE3EA; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 16px"><span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: #FFEDE3; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#13263A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="m12 12 8-4.5"/><path d="M12 12v9"/><path d="M12 12 4 7.5"/></svg></span><h3 style="margin: 0; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.4px">Every finding, on one blade in 3D</h3></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">The <strong style="color: #13263A">Global 3D view</strong> pools one blade model’s findings from across your whole fleet. Choose the model, the finding types and the dates, and every service lands on a single blade, so you see where damage clusters.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #3B4A5C; max-width: 60ch">Each inspection service page carries the same 3D blade for that one service, with external, internal and cutaway views.</p>
+<figure style="border-radius: 12px; background: #F3F5F8; border: 1px solid #E2E7ED; padding: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 10px">
+<svg role="img" aria-label="Illustration of findings from many services plotted on one blade" viewBox="0 0 480 110" style="display: block; width: 100%; height: auto">
+<circle cx="24" cy="56" r="16" fill="#E2E7ED" stroke="#13263A" stroke-width="1.5"/>
+<path d="M36 46 C50 36 70 32 100 30 C200 22 330 36 462 54 C466 56 466 58 462 60 C330 72 200 84 100 82 C70 80 50 76 36 66 Z" fill="#ffffff" stroke="#13263A" stroke-width="1.5"/>
+<path d="M60 57 C200 55 330 57 458 57" fill="none" stroke="#C9D2DC" stroke-width="1" stroke-dasharray="4 4"/>
+<circle cx="339" cy="38" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="378" cy="37" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="364" cy="40" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="307" cy="41" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="304" cy="40" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="308" cy="37" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="351" cy="44" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="315" cy="38" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="375" cy="45" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="369" cy="40" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="417" cy="36" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="403" cy="39" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="317" cy="37" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="337" cy="44" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="322" cy="42" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="377" cy="40" r="4" fill="#FC6722" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="113" cy="44" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="84" cy="48" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="121" cy="54" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="99" cy="58" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="107" cy="50" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="128" cy="62" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="95" cy="58" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="112" cy="67" r="4" fill="#13263A" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="362" cy="57" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="434" cy="54" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="271" cy="66" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="194" cy="61" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="161" cy="64" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="372" cy="62" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/><circle cx="404" cy="58" r="4" fill="#30A2D6" fill-opacity="0.85" stroke="#ffffff" stroke-width="1"/>
+</svg>
+<figcaption style="font-size: 13px; line-height: 1.5; color: #5B6B7D">Illustration: findings from every service of one blade model, on a single blade.</figcaption>
+</figure>
+</article>
+
+</div>
+</div>
+</section>
+
+<!-- Screen gallery -->
+<section id="screens" aria-label="Naventiq screens" style="padding: 104px 32px 120px; background: #F3F5F8">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 48px 72px; align-items: center">
+<div style="flex: 1 1 340px; max-width: 440px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.1; font-weight: 700; letter-spacing: -1px; text-wrap: balance">A closer look, screen by screen</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3B4A5C">Four views from the live portal. Pick one, or let them play through.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<button type="button" class="nq-step" data-i="0" aria-pressed="true">
+<span style="display: flex; gap: 16px; align-items: baseline"><span style="font-size: 14px; font-weight: 600; color: #8193A7; min-width: 22px">01</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; font-weight: 600; color: #13263A">Explore in 3D</span><span style="font-size: 15px; line-height: 1.55; color: #3B4A5C">See anomalies on a 3D blade. For one service, one blade, or your whole fleet.</span></span></span>
+<span class="nq-track"><span class="nq-progress"></span></span>
+</button>
+<button type="button" class="nq-step" data-i="1" aria-pressed="false">
+<span style="display: flex; gap: 16px; align-items: baseline"><span style="font-size: 14px; font-weight: 600; color: #8193A7; min-width: 22px">02</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; font-weight: 600; color: #13263A">Compare services side by side</span><span style="font-size: 15px; line-height: 1.55; color: #3B4A5C">View raw data from different services on the same blade side.</span></span></span>
+<span class="nq-track"><span class="nq-progress"></span></span>
+</button>
+<button type="button" class="nq-step" data-i="2" aria-pressed="false">
+<span style="display: flex; gap: 16px; align-items: baseline"><span style="font-size: 14px; font-weight: 600; color: #8193A7; min-width: 22px">03</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; font-weight: 600; color: #13263A">Go from finding to action</span><span style="font-size: 15px; line-height: 1.55; color: #3B4A5C">Assign reviews and plan field work straight from an anomaly.</span></span></span>
+<span class="nq-track"><span class="nq-progress"></span></span>
+</button>
+<button type="button" class="nq-step" data-i="3" aria-pressed="false">
+<span style="display: flex; gap: 16px; align-items: baseline"><span style="font-size: 14px; font-weight: 600; color: #8193A7; min-width: 22px">04</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; font-weight: 600; color: #13263A">Browse anomalies your way</span><span style="font-size: 15px; line-height: 1.55; color: #3B4A5C">Hotkeys, a side panel for details and quick actions, stronger filters, custom columns and saved views.</span></span></span>
+<span class="nq-track"><span class="nq-progress"></span></span>
+</button>
+
+</div>
+</div>
+
+<div style="flex: 2 1 560px; min-width: 0; padding: 0 3%">
+<div style="position: relative; background: #0C1A29; border: 1px solid #2B4058; border-radius: 22px 22px 6px 6px; padding: 16px 16px 20px">
+<span style="position: absolute; top: 6px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #2B4058"></span>
+<div style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #ffffff; border-radius: 4px">
+<img class="nq-shot" data-i="0" src="assets/screen-01.jpg" alt="Turbine view with a 3D blade twin showing its findings" loading="eager" style="opacity: 1" />
+<img class="nq-shot" data-i="1" src="assets/screen-02.jpg" alt="Two inspections of the same leading edge compared side by side" loading="lazy" style="opacity: 0" />
+<img class="nq-shot" data-i="2" src="assets/screen-03.jpg" alt="Office tasks board with a task detail panel open" loading="lazy" style="opacity: 0" />
+<img class="nq-shot" data-i="3" src="assets/screen-04.jpg" alt="Insights page with the Global 3D view of one blade model" loading="lazy" style="opacity: 0" />
+
+</div>
+</div>
+<div style="position: relative; height: 18px; margin: 0 -7%; background: linear-gradient(to bottom, #E5EAF0 0%, #C3CDD8 100%); border-radius: 2px 2px 18px 18px; box-shadow: 0 30px 40px -20px rgba(12, 26, 41, 0.45)">
+<span style="position: absolute; top: 0; left: 50%; width: 16%; height: 7px; transform: translateX(-50%); background: #AEB9C5; border-radius: 0 0 8px 8px"></span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Where everything lives -->
+<section id="map" style="padding: 96px 32px 112px; background: #ffffff">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px 64px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 14px; flex: 1 1 320px; max-width: 420px">
+<h2 style="margin: 0; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.1; font-weight: 700; letter-spacing: -1px">One sidebar for your whole fleet</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3B4A5C">Eight sections, in the order you meet them. Guides are built into the app: “Getting around” walks through every section in under a minute.</p>
+</div>
+<dl style="margin: 0; display: flex; flex-direction: column; flex: 2 1 560px; min-width: 0">
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Your starting point, in the focus you choose: Operations or Engineering.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11v10"/><path d="M9 21h6"/><circle cx="12" cy="9" r="1.5"/><path d="M12 7.5V2.5"/><path d="m10.7 9.8-4.4 2.6"/><path d="m13.3 9.8 4.4 2.6"/></svg>Assets</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Your fleet, from wind-farm locations down to individual turbines and blades.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/><path d="M11 7.5v4"/><path d="M11 14.5h.01"/></svg>Findings</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Every anomaly found on your blades. Review and act on them, and build your own views with filters and columns.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projects</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">All your service projects in one list, with scope, status and progress.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 13 2 2 4-4"/></svg>Planning</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Office tasks inside the portal, and field work on the turbines ahead.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6"/><path d="m9.5 14.5 2.5 2.5 2.5-2.5"/></svg>Delivery</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Inspection reports, completed services and billing. Generate custom reports for chosen turbines, locations or projects.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><path d="m8 15 4-5 3 3 5-6"/></svg>Insights</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Fleet-wide analytics to spot trends across turbines and blades and plan maintenance.</dd></div>
+<div style="display: grid; grid-template-columns: minmax(140px, 200px) minmax(0, 1fr); gap: 24px; padding: 20px 0; border-top: 1px solid #DDE3EA; border-bottom: 1px solid #DDE3EA"><dt style="font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FC6722" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><circle cx="12" cy="10" r="2"/><path d="M9 15.5c.8-1.2 1.8-1.8 3-1.8s2.2.6 3 1.8"/></svg>Access control</dt><dd style="margin: 0; font-size: 16px; line-height: 1.6; color: #3B4A5C">Invite colleagues and set what each role can see and do, without waiting on us.</dd></div>
+</dl>
+</div>
+</section>
+
+<!-- Book a demo -->
+<section id="demo" style="background: #13263A; color: #ffffff; padding: 104px 32px">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 48px 80px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.04; font-weight: 700; letter-spacing: -1.6px; text-wrap: balance">See Naventiq on a fleet like yours</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #C8D3DF; max-width: 46ch">Book a live walkthrough with the Aerones team. We will show how findings, planning and the 3D blade view fit your inspection programme, and answer your questions.</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #9FB0C2">Prefer email? Write to <a href="mailto:sales@aerones.com" style="color: #ffffff; font-weight: 500">sales@aerones.com</a></p>
+</div>
+
+<div style="background: #ffffff; color: #13263A; border-radius: 16px; padding: 28px; min-height: 480px">
+<div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/1ytJClcwfqPzJsFerrnQ8wX1QpUmWAKbhecDg4HGsKFpcWMo7o2yHIbtkaT2J1aRJ"><script src="https://webforms.pipedrive.com/f/loader"></script></div>
+<noscript><p style="font-size: 16px">Open the <a href="https://webforms.pipedrive.com/f/1ytJClcwfqPzJsFerrnQ8wX1QpUmWAKbhecDg4HGsKFpcWMo7o2yHIbtkaT2J1aRJ">demo request form</a>.</p></noscript>
+</div>
+</div>
+</section>
+
+<footer style="background: #0C1A29; color: #9FB0C2; padding: 32px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px">
+<div style="display: flex; align-items: center; gap: 14px"><svg role="img" aria-label="Aerones" viewBox="0 0 180 24.87" style="height: 16px; width: auto; display: block" fill="#ffffff"><path d="M100.62,3.82c-.97-.99-2.12-1.84-3.44-2.48-.13-.06-.25-.12-.38-.17l-5.3,10.86,5.55-4c4.56,4.41,3.58,13.28-6.96,16.74,0,0,0,0,0,0,5.15.69,10.38-1.93,12.79-6.85,2.36-4.84,1.28-10.45-2.27-14.09Z"></path><path d="M82.13,21.06c.97.99,2.12,1.84,3.44,2.48.13.06.25.12.38.17l5.3-10.86-5.55,4c-4.56-4.41-3.58-13.28,6.96-16.74,0,0,0,0,0,0-5.15-.69-10.38,1.93-12.79,6.85-2.36,4.84-1.28,10.45,2.27,14.09Z"></path><path d="M0,23.67L10.42,1.21h4.99l10.42,22.46h-6.57l-1.44-3.44H7.77l-1.41,3.44H0ZM9.7,15.55h6.19l-2.99-7.19h-.21l-2.99,7.19Z"></path><path d="M45.59,14.66h-10.65v3.96h13.93v5.06h-19.95V1.21h19.19v5.06h-13.17v3.54h10.65v4.85Z"></path><path d="M53.09,23.67V1.21h12.52c3.4,0,5.54,1,6.98,2.51,1.2,1.27,1.93,2.92,1.93,4.78,0,2.75-1.58,4.92-4.13,6.23l5.16,8.94h-6.81l-4.3-7.91h-5.33v7.91h-6.02ZM59.11,6.09v4.78h6.84c1.41,0,2.55-.86,2.55-2.41,0-.62-.24-1.24-.65-1.69-.55-.58-1.27-.69-1.89-.69h-6.84Z"></path><path d="M129.31,1.21v22.46h-5.09l-9.91-12.21h-.04v12.21h-6.05V1.21h5.06l9.94,12.24h.03V1.21h6.05Z"></path><path d="M151.7,14.66h-10.65v3.96h13.93v5.06h-19.95V1.21h19.19v5.06h-13.17v3.54h10.65v4.85Z"></path><path d="M175.36,7.47c-1.48-.86-4.3-2.2-7.6-2.2-1.82,0-3.4.83-3.4,2.27,0,1.58,2.58,1.72,5.02,1.96,4.13.27,10.63.83,10.63,6.95,0,5.68-4.68,7.91-10.32,7.91s-9.73-2.17-12.45-4.16l3.23-4.09c1.55,1.1,5.13,3.54,9.12,3.54,2.79,0,4.4-1.2,4.4-2.68,0-1.62-1.93-1.93-4.82-2.17-5.02-.41-10.83-.93-10.83-6.95,0-5.57,5.19-7.33,9.56-7.33,4.61,0,8.7,1.55,10.73,2.75l-3.27,4.2Z"></path></svg><span>Naventiq customer portal</span></div>
+<div>Aerones, Katlakalna iela 11E, Riga, LV-1073, Latvia</div>
+<div style="display: flex; gap: 24px; flex-wrap: wrap"><a href="mailto:info@aerones.com" style="color: #D5DEE8">info@aerones.com</a><a href="https://portal.aerones.com/system/login" style="color: #D5DEE8">Customer log in</a></div>
+</div>
+</footer>
+
+</div>
+<script>
+(function(){
+  var steps=[].slice.call(document.querySelectorAll('.nq-step')),shots=[].slice.call(document.querySelectorAll('.nq-shot'));
+  var active=0,timer=null,reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(i){active=i;steps.forEach(function(s,k){s.setAttribute('aria-pressed',k===i?'true':'false');var p=s.querySelector('.nq-progress');p.style.animation='none';void p.offsetWidth;p.style.animation='';});shots.forEach(function(s,k){s.style.opacity=k===i?'1':'0';});}
+  function start(){if(reduce)return;clearInterval(timer);timer=setInterval(function(){show((active+1)%steps.length);},6000);}
+  steps.forEach(function(s,k){s.addEventListener('click',function(){show(k);start();});});
+  start();
+})();
+</script>
+</body>
+</html>
